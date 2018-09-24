@@ -39,13 +39,29 @@ This dataset contains (or is to contain) category based crawling articles from 3
 8. [Daylight Nigeria](http://daylight.ng/)
 
 
-In the list above, only __The Punch__ has been crawled.
+P.S : In the list above, only __The Punch__ has been crawled.
 
 
 ## Folder Structure
 The repository contains two main folders. `corpus` and `scripts`.
 The `scripts` folder contains the crawler python script named according to the site it was written for.
 The `corpus` folder contains the crawled data.
+
+Each folder in the corpus corresponds to a news site and each file in the folder corresponds to a category on the site.
+
+The features available for each file is described below:
+
+```
+{
+    "titles" : "Article Title",
+    "published_date": "Date artcile was published",
+    "visits": "The number of visits on the article page",
+    "crawled_date": "The date the artcile was crawled",
+    "text" : "Article Content",
+    "author" : "Article Author"
+}
+
+```
 
 ## Tool set
 While there's no specific set of tools for doing this, some of the tools I used while doing this include:
