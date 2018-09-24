@@ -45,6 +45,7 @@ In the list above, only __The Punch__ has been crawled.
 ## Folder Structure
 The repository contains two main folders. `corpus` and `scripts`.
 The `scripts` folder contains the crawler python script named according to the site it was written for.
+The `corpus` folder contains the crawled data.
 
 ## Tool set
 While there's no specific set of tools for doing this, some of the tools I used while doing this include:
@@ -70,16 +71,14 @@ Natural Language Understanding
 ## Release History
 
 * 0.1
-    * ADDED: Added News category for punch
-    * ADDED: Added Editorial category for punch
+    * ADDED: News category for punch
+    * ADDED: Editorial category for punch
 
 ## Meta
 
 Olamilekan Wahab – [@__olamilekan__](https://twitter.com/__olamilekan__) – olamyy53@gmail.com
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
-
-[https://github.com/Olamyy/nigerian_newspaper_corpus](hhttps://github.com/Olamyy/nigerian_newspaper_corpus)
 
 ## Contributing
 
