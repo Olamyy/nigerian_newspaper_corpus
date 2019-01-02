@@ -11,11 +11,11 @@ cat = {"News": "topics/news", "Sport": "topics/sports", "Metro Plus": "topics/me
 
 for cat_name, url in cat.items():
 
-    filename = cat_name.lower() + '.json'
+    filename = "corpus/punchng/{}.json".format(cat_name.lower())
 
-    hold_out = uri.format(cat)
+    print("Saving to {0}".format(filename))
 
-    print(hold_out)
+    hold_out = uri.format(url)
 
     request = requests.get(hold_out)
 
@@ -24,6 +24,7 @@ for cat_name, url in cat.items():
     paginate = soup.find("div", class_='paginations')
 
     available_pages = [paginate.text]
+
     available_pages = available_pages[0].split('\n')
     available_pages = [i.replace(',', '') for i in available_pages if i.isdigit() or ',' in i]
     available_pages = [int(i) for i in available_pages]
@@ -43,6 +44,7 @@ for cat_name, url in cat.items():
         soup = BeautifulSoup(request.content, "html.parser")
 
         paginate = soup.findAll("div", class_='items col-sm-12')
+
         for div in paginate:
             links = div.findAll('a')
             for a in links:
@@ -52,16 +54,23 @@ for cat_name, url in cat.items():
                     print()
                     request = requests.get(article)
                     soup = BeautifulSoup(request.content, "html.parser")
+
                     try:
+                        
+                        authors = soup.find("p", style="text-align: justify;")
+                        visits = soup.find("div", class_="tptn_counter")
+
                         result_map = {"titles": soup.find("h1", class_='post_title').text,
-                                      'published_date': soup.find("time", class_="entry-date published").text,
-                                      'author': soup.find("p", style="text-align: justify;").text,
-                                      'visits': soup.find("div", class_="tptn_counter").text,
+                                      "tags": soup.find('meta', attrs={'name':'news_keywords'}).get("content"),
+                                      'published_date': soup.find("time", class_="entry-date published updated").text,
+                                      'author': authors.text if authors else None,
+                                      'visits': visits.text if visits else None,
                                       'text': soup.find("div", class_='entry-content').text,
                                       'category': cat_name,
-                                      'crawled_on': repr(datetime.datetime.now())}
+                                      'crawled_on': repr(datetime.datetime.now())
+                                      }
                         result_l.append(result_map)
-                    except (AttributeError, ValueError):
+                    except (AttributeError, ValueError) as error:
                         pass
 
             with open(filename, 'w') as fp:
