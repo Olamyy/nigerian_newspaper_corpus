@@ -34,7 +34,7 @@ for cat_name, url in cat.items():
     print("Starting work on the {0} category".format(cat_name))
     print()
 
-    for i in range(1, int(max_page) + 1):
+    for i in range(227, int(max_page) + 1):
         print("Working on page {0} of {1}".format(i, cat_name))
         new_holdout = hold_out + "/page/{}".format(i)
         print("Building URL .....")
