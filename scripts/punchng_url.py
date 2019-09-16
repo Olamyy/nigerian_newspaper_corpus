@@ -10,9 +10,12 @@ uri = "https://punchng.com/{0}"
 cat = {"News": "topics/news", "Sport": "topics/sports", "Metro Plus": "topics/metro-plus", "Politics": "topics/politics", "Business": "topics/business", "Entertainment": "topics/entertainment",
        "Editorial": "topics/editorial", "Opinion": "columnist/opinion", "Columnist": "topics/columnist"}
 
-for cat_name, url in cat.items():
+filename = "corpus/punchng_url.txt"
 
-    filename = "corpus/punchng_url.txt"
+with open(filename, 'a') as fpr:
+    all_ = fpr.readlines()
+
+for cat_name, url in cat.items():
 
     logging.info("Saving to {0}".format(filename))
 
@@ -35,7 +38,7 @@ for cat_name, url in cat.items():
     logging.info("Starting work on the {0} category".format(cat_name))
     logging.info("{0} has {1} pages".format(cat_name, max_page + 1))
 
-    for i in range(1088, int(max_page) + 1):
+    for i in range(0, int(max_page) + 1):
         logging.info("Working on page {0} of {1}".format(i, cat_name))
         new_holdout = hold_out + "/page/{}".format(i)
         logging.info("Building page {0}".format(new_holdout))
@@ -52,5 +55,8 @@ for cat_name, url in cat.items():
                 articles_on_page = [a['href']]
                 with open(filename, 'a') as fp:
                     for article in articles_on_page:
-                        fp.writelines(article + '\n')
+                        if article in set(all_):
+                            logging.info("{0} already found.".format(article))
+                        else:
+                            fp.writelines(article + '\n')
             print('Done')
